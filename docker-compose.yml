@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mysql-python-analyse-python:
+    build: 
+      context: ./python
+    container_name: "${CONTAINER_NAME_PREFIX}mysql-python-analyse-python"
+    volumes:
+      - "./python:/home/python"
+    working_dir: /home/python
+    env_file: .env
+    ports:
+      - "${JUPYTER_PORT}:8888"
+    links:
+      - mysql-python-analyse-mysql
+  mysql-python-analyse-mysql:
+    image: mysql:5.7
+    container_name: "${CONTAINER_NAME_PREFIX}mysql-python-analyse-mysql"
+    hostname: mysql-python-analyse-mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --explicit_defaults_for_timestamp=true
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - "${MYSQL_PORT}:3306"
+    env_file: .env

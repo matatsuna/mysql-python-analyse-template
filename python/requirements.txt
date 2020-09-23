@@ -1,0 +1,4 @@
+jupyterlab
+mysql-connector-python
+jupyter-contrib-nbextensions
+jupyterthemes
